@@ -3,7 +3,7 @@ package Games.Common;
 public abstract class Game {
     
     protected String name;
-    protected boolean isPlayerTurn;
+    protected Player currentPlayer;
     protected boolean isGameOver;
     protected Result results;
 
@@ -29,11 +29,7 @@ public abstract class Game {
     }
 
     public boolean isPlayerTurn() {
-        return isPlayerTurn;
-    }
-
-    public void setPlayerTurn(boolean isPlayerTurn) {
-        this.isPlayerTurn = isPlayerTurn;
+        return (currentPlayer == Player.HUMAN);
     }
 
     public boolean isGameOver() {
@@ -49,17 +45,24 @@ public abstract class Game {
     abstract boolean checkIfGameEnded();
 
     protected void switchTurns() {
-        isPlayerTurn = !isPlayerTurn;
+        if (currentPlayer == Player.HUMAN) {
+            currentPlayer = Player.AI;
+        }
+        else {
+            currentPlayer = Player.HUMAN;
+        }
     }
     
-    abstract boolean move(Move move);
+    abstract boolean move();
 
-    abstract Move getAIMove();
+    abstract boolean move(Object obj);
 
     abstract Result checkResult();
 
     protected void reset() {
         setUp();
     }
+
+    abstract boolean validateMove();
 
 }
