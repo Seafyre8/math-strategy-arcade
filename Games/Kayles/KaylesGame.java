@@ -29,17 +29,11 @@ public class KaylesGame extends Game<boolean[], Integer> {
     }
     
     protected boolean checkIfGameEnded() {
-        if (numberOfPins == 0) {
-            return true;
-        }
-        return false;
+        return (numberOfPins == 0);
     }
 
     protected boolean validateMove(Integer index) {
-        if (board[index]) {
-            return true;
-        }
-        return false;
+        return (board[index]);
     }
 
     protected boolean move() {
@@ -69,7 +63,7 @@ public class KaylesGame extends Game<boolean[], Integer> {
     protected boolean computerMove() {
         if (isComputerFirst) {
             int middle = board.length / 2;
-            if (board[middle] == true) {
+            if (board[middle]) {
                 if (isBoardEven) {
                     board[middle] = false;
                     board[middle + 1] = false;
