@@ -1,23 +1,21 @@
 package Games.Common;
 
-public abstract class Game {
+public abstract class Game<B, M> {
     
     protected String name;
     protected Player currentPlayer;
     protected boolean isGameOver;
     protected Result results;
-
-    public Result getResults() {
-        return results;
-    }
-
-    public void setResults(Result results) {
-        this.results = results;
-    }
+    protected B board;
 
     protected Game(String name) {
         this.name = name;
         setUp();
+        while (!isGameOver) {
+            move();
+            checkIfGameEnded();
+            switchTurns();
+        }
     }
 
     public String getName() {
@@ -40,9 +38,33 @@ public abstract class Game {
         this.isGameOver = isGameOver;
     }
 
-    abstract void setUp();
+    public Result getResults() {
+        return results;
+    }
+
+    public void setResults(Result results) {
+        this.results = results;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
+    public B getBoard() {
+        return board;
+    }
+
+    public void setBoard(B board) {
+        this.board = board;
+    }
+
+    protected abstract void setUp();
     
-    abstract boolean checkIfGameEnded();
+    protected abstract boolean checkIfGameEnded();
 
     protected void switchTurns() {
         if (currentPlayer == Player.HUMAN) {
@@ -53,16 +75,16 @@ public abstract class Game {
         }
     }
     
-    abstract boolean move();
+    protected abstract boolean move();
 
-    abstract boolean move(Object obj);
+    protected abstract boolean computerMove();
 
-    abstract Result checkResult();
+    protected abstract boolean humanMove();
 
     protected void reset() {
         setUp();
     }
 
-    abstract boolean validateMove();
+    protected abstract boolean validateMove(M move);
 
 }
